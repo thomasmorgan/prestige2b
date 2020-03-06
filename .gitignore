@@ -3,3 +3,4 @@
 *.rdb
 *.pyc
 /snapshots/*
+*.DS_Store
