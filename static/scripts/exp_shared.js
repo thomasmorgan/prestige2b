@@ -312,6 +312,7 @@ update_neighbor_button = function(number, neighbor) {
                         info_chosen=info_chosen);
         disable_neighbor_buttons();
         $("#neighbor_div").hide();
+        $("#wait_div").show();
     });
     $(button_id).prop("disabled", false);
     $(button_id).show();
