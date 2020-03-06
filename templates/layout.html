@@ -1,0 +1,17 @@
+{% extends "base/layout.html" %}
+
+{% block title -%}
+    Psychology Experiment
+{%- endblock %}
+
+{% block scripts %}
+	{{ super() }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+			dallinger.getExperimentProperty("condition").done(function (resp) {
+				condition = resp.condition;
+				store.set("condition", condition);
+			});
+		});
+	</script>
+{% endblock %}
