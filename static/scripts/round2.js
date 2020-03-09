@@ -74,7 +74,7 @@ display_round_warning = function() {
     var button_c_html = '<button id="check_C" type="button" class="btn btn-primary"> Times chosen altogether, or, times chosen on the topic you are answering </button>';
     var buttons = [button_a_html, button_b_html, button_c_html];
     shuffle(buttons);
-    button_html = buttons[0] + buttons[1] + buttons[2];
+    button_html = buttons[0] + "<br>" + buttons[1] + "<br>" + buttons[2];
     $("#r2_check_button_div").html(button_html);
 
     $("#check_A").click(function() {
