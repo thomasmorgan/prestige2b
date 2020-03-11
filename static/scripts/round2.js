@@ -108,9 +108,9 @@ display_round_warning = function() {
     if (condition == "A") {
         check_info = '<br><br> 1) the number of times they were chosen in Round 1 on the topic you are answering, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 on a different topic.';
     } else if (condition =="B") {
-        check_info = '<br><br> 1) the number of times they were chosen in Round 1 on a different topic to the one you are answering, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 altogether.';
+        check_info = '<br><br> 1) the number of times they were chosen in Round 1 on a different topic to the one you are answering, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 across all topics altogether.';
     } else if (condition =="C") {
-        check_info = '<br><br> 1) the number of times they were chosen in Round 1 altogether, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 on the topic you are answering.';
+        check_info = '<br><br> 1) the number of times they were chosen in Round 1 across all topics altogether, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 on the topic you are answering.';
     }
 
     $("#warning_info").html('Thank you for completing Round 1. <br> <br> You are now starting <font color="red"> Round 2 </font> which consists of the final 40 questions.<br><br>You will now be given <font color = "red"> two </font> choices each time you choose to <font color = "red"> "Ask Someone Else" </font> <br><br>You will be able to choose between seeing either: ' + check_info);

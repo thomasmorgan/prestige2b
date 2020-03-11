@@ -4,7 +4,7 @@ $(document).ready(function() {
     $("#welcome_div").show();
     // add functionality to warning acknowledge button
     $(".warning_button").click(function() {
-        $("#welcome_div").show();
+        $("#welcome_div").hide();
         $("#submit_div").show();
         $("#neighbor_buttons").show();
         $("#warning_div").hide();
@@ -14,7 +14,7 @@ $(document).ready(function() {
 });
 
 response_submitted = function(resp) {
-    if (resp.info.contents != "Ask Someone Else" && number == "59") {
+    if (resp.info.contents != "Ask Someone Else" && number == "60") {
         dallinger.allowExit();
         dallinger.goToPage("round2");
     } else {
