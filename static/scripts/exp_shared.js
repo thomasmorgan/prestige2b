@@ -255,7 +255,7 @@ process_neighbors = function() {
         }
     }
 
-    $("#neighbor_prompt").html(part1 + part2 + " Please select a player to copy.")    
+    $("#neighbor_prompt").html(part1 + part2 + "<br><br> Please select a player to copy.")    
 
     // update neighbor buttons
     current_button = 1;

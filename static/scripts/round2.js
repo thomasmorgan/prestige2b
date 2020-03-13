@@ -186,6 +186,7 @@ assign_choice_buttons = function() {
 info_choice = function() {
     assign_choice_buttons();
     $("#info_choice_div").show();
+    $("#wait_div").hide();
 };
 
 process_neighbors = function() {
@@ -209,8 +210,8 @@ process_neighbors = function() {
             part2 = "below are how many times they were chosen in Round 1 on this Topic.";
         }
     }
-
-    $("#neighbor_prompt").html(part1 + part2 + " Please select a player to copy.")    
+    $("#wait_div").hide()
+    $("#neighbor_prompt").html(part1 + part2 + "<br><br> Please select a player to copy.")    
 
     // update neighbor buttons
     current_button = 1;
@@ -219,7 +220,5 @@ process_neighbors = function() {
         current_button = current_button + 1;
     });
 
-    // show the div
-    $("#wait_div").hide()
     $("#neighbor_div").show()
 };

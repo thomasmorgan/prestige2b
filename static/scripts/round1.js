@@ -1,7 +1,7 @@
 // this function runs immediately once the page is loaded
 $(document).ready(function() {
 
-    $("#welcome_div").show();
+    $("#welcome_div").hide();
     // add functionality to warning acknowledge button
     $(".warning_button").click(function() {
         $("#welcome_div").hide();
