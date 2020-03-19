@@ -185,7 +185,8 @@ submit_response = function(response, copy=false, info_chosen="NA", human=true) {
             "info_chosen": info_chosen,
             "round": round,
             "human": human,
-            "topic": topic
+            "topic": topic,
+            "random": random_topic
         })
     }).done(function (resp) {
         response_submitted(resp);
@@ -301,9 +302,6 @@ update_neighbor_button = function(number, neighbor) {
             var topics = ["Geography", "Art", "Language", "Weight"];
             var other_topics = topics.filter(function(t, index, arr){ return t != topic; });
             random_topic = other_topics[Math.floor(Math.random() * other_topics.length)];
-            submit_response(response=random_topic,
-                            copy=true,
-                            info_chosen=info_chosen);
         }
         $(button_id).html(neighbor_image + "chosen " + "<font size='5'>" + copies[random_topic] + "</font>" + " times in the " + random_topic + " topic");
     }
@@ -312,7 +310,8 @@ update_neighbor_button = function(number, neighbor) {
     $(button_id).click(function() {
         submit_response(response=neighbor.id,
                         copy=true,
-                        info_chosen=info_chosen);
+                        info_chosen=info_chosen,
+                        random=random_topic);
         disable_neighbor_buttons();
         $("#neighbor_div").hide();
         $("#wait_div").show();
