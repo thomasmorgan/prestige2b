@@ -113,7 +113,8 @@ var process_info = function(info) {
             submit_response(response="Bad Luck",
                             copy=undefined,
                             info_chosen=undefined,
-                            human=false);
+                            human=false,
+                            topic_seen=undefined);
         }, 3000);
 
     // a contents of "Good luck" indicates you chose to copy, but not everyone else did.
@@ -211,7 +212,8 @@ start_answer_timeout = function() {
             submit_response(Wwer,
                             copy=undefined,
                             info_chosen=undefined,
-                            human=false);
+                            human=false,
+                            topic_seen=undefined);
         } else {
             start_answer_timeout();
         }
