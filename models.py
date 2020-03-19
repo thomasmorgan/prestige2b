@@ -212,6 +212,10 @@ class LottyInfo(Info):
     def topic(self):
         return json.loads(self.property1)["topic"]
 
+    @property
+    def topic_seen(self):
+        return json.loads(self.property1)["topic_seen"]
+
     @number.setter
     def number(self, val):
         p1 = json.loads(self.property1)
@@ -249,9 +253,15 @@ class LottyInfo(Info):
         self.property1 = json.dumps(p1)
 
     @topic.setter
-    def topic(Self, val):
+    def topic(self, val):
         p1 = json.loads(self.property1)
         p1["topic"] = val
+        self.property1 = json.dumps(p1)
+
+    @topic_seen.setter
+    def topic_seen(self, val):
+        p1 = json.loads(self.property1)
+        p1["topic_seen"] = val
         self.property1 = json.dumps(p1)
 
 
