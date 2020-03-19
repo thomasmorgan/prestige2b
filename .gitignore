@@ -4,3 +4,4 @@
 *.pyc
 /snapshots/*
 *.DS_Store
+/data/*
