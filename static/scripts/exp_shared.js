@@ -301,6 +301,9 @@ update_neighbor_button = function(number, neighbor) {
             var topics = ["Geography", "Art", "Language", "Weight"];
             var other_topics = topics.filter(function(t, index, arr){ return t != topic; });
             random_topic = other_topics[Math.floor(Math.random() * other_topics.length)];
+            submit_response(response=random_topic,
+                            copy=true,
+                            info_chosen=info_chosen);
         }
         $(button_id).html(neighbor_image + "chosen " + "<font size='5'>" + copies[random_topic] + "</font>" + " times in the " + random_topic + " topic");
     }
