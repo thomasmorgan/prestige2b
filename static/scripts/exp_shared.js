@@ -9,15 +9,15 @@ $(document).ready(function() {
     // Add functionality to buttons controlling participants answers
     // either option a, option b, or copy someone else.
     $("#submit-a").click(function() {
-        submit_answer("#submit-a")
+        submit_answer("#submit-a");
     });
 
     $("#submit-b").click(function() {
-        submit_answer("#submit-b")
+        submit_answer("#submit-b");
     });
 
     $("#submit-copy").click(function() {
-        submit_answer("#submit-copy")
+        submit_answer("#submit-copy");
     });
 
     submit_answer = function(answer) {
@@ -25,7 +25,7 @@ $(document).ready(function() {
         $("#question_div").hide();
         $("#wait_div").show();
         submit_response(response=$(answer).text());
-    }
+    };
 
     add_neighbor_buttons();
     get_details_from_store();
@@ -35,7 +35,7 @@ $(document).ready(function() {
 stop_countdown = function() {
     clearTimeout(answer_timeout);
     $("#countdown").html("");
-}
+};
 
 // allows variables to be passed between pages
 get_details_from_store = function() {
@@ -43,7 +43,7 @@ get_details_from_store = function() {
     my_network_id = store.get("network_id");
     condition = store.get("condition");
     $("#welcome").html("Welcome to our quiz, you are player " + store.get("node_name"));
-}
+};
 
 // get any pending incoming transmissions
 // this function is called repeatedly while we are waiting for other to catch up.
@@ -82,7 +82,7 @@ get_transmissions = function() {
         console.log(rejection);
         $('body').html(rejection.html);
     });
-}
+};
 
 // get a specific info
 // use to get the contents of an info you have been sent.
@@ -96,7 +96,7 @@ var get_info = function(info_id) {
         console.log(rejection);
         $('body').html(rejection.html);
     });
-}
+};
 
 // Process an info.
 // 
@@ -144,14 +144,14 @@ parse_question = function(question) {
     topic = question_json.topic;
     round = question_json.round;
     pic = question_json.pic;
-}
+};
 
 // display the question
 display_question = function() {
     console.log("*** Displaying question");
     
     $("#question").html(question_text);
-    update_question_number_text()
+    update_question_number_text();
     
     if (pic == true) {
         show_pics(number);
@@ -174,7 +174,7 @@ display_question = function() {
     $("#welcome_div").hide();
     $("#question_div").show();
     start_answer_timeout();
-}
+};
 
 submit_response = function(response, copy=false, info_chosen="NA", human=true) {
     dallinger.createInfo(my_node_id, {
@@ -196,7 +196,7 @@ submit_response = function(response, copy=false, info_chosen="NA", human=true) {
     .fail(function (rejection) {
         dallinger.error(rejection);
     });
-}
+};
 
 start_answer_timeout = function() {
     answer_timeout = setTimeout(function() {
@@ -216,7 +216,7 @@ start_answer_timeout = function() {
             start_answer_timeout();
         }
     }, 1000);
-}
+};
 
 var check_neighbors = function(info_chosen) {
     // get your neighbors
@@ -229,8 +229,8 @@ var check_neighbors = function(info_chosen) {
     ).done(function (resp) {
         neighbors = resp.nodes;
         process_neighbors();
-    })
-}
+    });
+};
 
 process_neighbors = function() {
     // update neighbor prompt
@@ -243,7 +243,7 @@ process_neighbors = function() {
         } else if (info_chosen == "Times Chosen Altogether") {
             part2 = "below is how many times they were chosen in Round 1 altogether.";
         } else if (info_chosen =="Times Chosen on a Different Topic") {
-            part2 = "below is how many times they were chosen in Round 1 on a different topic"
+            part2 = "below is how many times they were chosen in Round 1 on a different topic";
         }
     } else {
         part1 = ("You have " + neighbors.length + " players to copy from, ");
@@ -254,22 +254,22 @@ process_neighbors = function() {
         } else if (info_chosen == "Times Chosen Altogether") {
             part2 = "below are how many times they were chosen in Round 1 altogether.";
         } else if (info_chosen == "Times Chosen on a Different Topic") {
-            part2 = "below are how many times they were chosen in Round 1 on a different topic"
+            part2 = "below are how many times they were chosen in Round 1 on a different topic";
         }
     }
 
-    $("#neighbor_prompt").html(part1 + part2 + "<br><br> Please select a player to copy.")    
+    $("#neighbor_prompt").html(part1 + part2 + "<br><br> Please select a player to copy.");
 
     // update neighbor buttons
     current_button = 1;
     neighbors.forEach(function(entry) {
-        update_neighbor_button(current_button, entry)        
+        update_neighbor_button(current_button, entry);    
         current_button = current_button + 1;
     });
 
     // show the div
-    $("#wait_div").hide()
-    $("#neighbor_div").show()
+    $("#wait_div").hide();
+    $("#neighbor_div").show();
 };
 
 update_neighbor_button = function(number, neighbor) {
@@ -335,16 +335,16 @@ disable_neighbor_buttons = function() {
         $(button_string).off("click");
     }
     $("#question").html("Waiting for other players to catch up.");
-}
+};
 
 hide_pics = function() {
     $("#pics").hide();
-}
+};
 
 show_pics = function(number) {
     $("#pics").attr("src", "/static/images/" + number + ".png");
     $("#pics").show();
-}
+};
 
 
 // This is called by the exp.html page, it creates a set of buttons for your current
@@ -371,18 +371,18 @@ add_neighbor_buttons = function() {
             $(button_string).prop("disabled",true);
         }
     });
-}
+};
 
 get_source = function() {
-    url = "/node/" + my_node_id + "/neighbors"
+    url = "/node/" + my_node_id + "/neighbors";
     data = {
         connection: "from",
         node_type: "QuizSource"
-    }
+    };
     dallinger.get(url, data).done(function(resp) {
         console.log("pinged server");
     });
-}
+};
 
 
 
