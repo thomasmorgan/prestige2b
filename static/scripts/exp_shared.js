@@ -1,3 +1,5 @@
+var topic_seen;
+
 // this function runs immediately once the page is loaded
 $(document).ready(function() {
 
@@ -186,7 +188,7 @@ submit_response = function(response, copy=false, info_chosen="NA", human=true) {
             "round": round,
             "human": human,
             "topic": topic,
-            "random": random_topic
+            "topic_seen": topic_seen
         })
     }).done(function (resp) {
         response_submitted(resp);
@@ -291,19 +293,23 @@ update_neighbor_button = function(number, neighbor) {
     // update button and question display according to info_chosen
     if (info_chosen == "Topic Score" && round !==0) {
         $(button_id).html(neighbor_image + topic + " Score: " + "<font size='5'>" + scores[topic] + "</font>" + " correct");
+        topic_seen = topic;
     } else if (info_chosen =="Topic Score" && round ==0) {
         $(button_id).html(neighbor_image + topic + " Score: " + "<font size='5'> 0 </font>" + " correct");
+        topic_seen = topic;
     } else if (info_chosen == "Times Chosen on This Topic") {
         $(button_id).html(neighbor_image + "chosen " + "<font size='5'>" + copies[topic] + "</font>" + " times in the " + topic + " topic");
+        topic_seen = topic;
     } else if (info_chosen == "Times Chosen Altogether") {
         $(button_id).html(neighbor_image + "chosen " + "<font size='5'>" + neighbor_properties.n_copies + "</font>" + " times altogether in Round 1");
+        topic_seen = "all";
     } else if (info_chosen == "Times Chosen on a Different Topic") {
         if (number == 1) {
             var topics = ["Geography", "Art", "Language", "Weight"];
             var other_topics = topics.filter(function(t, index, arr){ return t != topic; });
-            random_topic = other_topics[Math.floor(Math.random() * other_topics.length)];
+            topic_seen = other_topics[Math.floor(Math.random() * other_topics.length)];
         }
-        $(button_id).html(neighbor_image + "chosen " + "<font size='5'>" + copies[random_topic] + "</font>" + " times in the " + random_topic + " topic");
+        $(button_id).html(neighbor_image + "chosen " + "<font size='5'>" + copies[topic_seen] + "</font>" + " times in the " + topic_seen + " topic");
     }
 
     // add button functionality
@@ -311,7 +317,7 @@ update_neighbor_button = function(number, neighbor) {
         submit_response(response=neighbor.id,
                         copy=true,
                         info_chosen=info_chosen,
-                        random=random_topic);
+                        topic_seen=topic_seen);
         disable_neighbor_buttons();
         $("#neighbor_div").hide();
         $("#wait_div").show();
