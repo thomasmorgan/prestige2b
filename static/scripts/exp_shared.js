@@ -316,8 +316,7 @@ update_neighbor_button = function(number, neighbor) {
     $(button_id).click(function() {
         submit_response(response=neighbor.id,
                         copy=true,
-                        info_chosen=info_chosen,
-                        topic_seen=topic_seen);
+                        info_chosen=info_chosen);
         disable_neighbor_buttons();
         $("#neighbor_div").hide();
         $("#wait_div").show();
