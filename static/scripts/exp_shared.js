@@ -293,21 +293,21 @@ update_neighbor_button = function(number, neighbor) {
     // update button and question display according to info_chosen
     if (info_chosen == "Topic Score" && round !==0) {
         $(button_id).html(neighbor_image + topic + " Score: " + "<font size='5'>" + scores[topic] + "</font>" + " correct");
-        var topic_seen = topic;
+        topic_seen = "Experiment1";
     } else if (info_chosen =="Topic Score" && round ==0) {
         $(button_id).html(neighbor_image + topic + " Score: " + "<font size='5'> 0 </font>" + " correct");
-        var topic_seen = topic;
+        topic_seen = "Experiment";
     } else if (info_chosen == "Times Chosen on This Topic") {
         $(button_id).html(neighbor_image + "chosen " + "<font size='5'>" + copies[topic] + "</font>" + " times in the " + topic + " topic");
-        var topic_seen = topic;
+        topic_seen = "Experiment";
     } else if (info_chosen == "Times Chosen Altogether") {
         $(button_id).html(neighbor_image + "chosen " + "<font size='5'>" + neighbor_properties.n_copies + "</font>" + " times altogether in Round 1");
-        var topic_seen = "all";
+        topic_seen = "Experiment";
     } else if (info_chosen == "Times Chosen on a Different Topic") {
         if (number == 1) {
             var topics = ["Geography", "Art", "Language", "Weight"];
             var other_topics = topics.filter(function(t, index, arr){ return t != topic; });
-            var topic_seen = other_topics[Math.floor(Math.random() * other_topics.length)];
+            topic_seen = other_topics[Math.floor(Math.random() * other_topics.length)];
         }
         $(button_id).html(neighbor_image + "chosen " + "<font size='5'>" + copies[topic_seen] + "</font>" + " times in the " + topic_seen + " topic");
     }
@@ -317,6 +317,7 @@ update_neighbor_button = function(number, neighbor) {
         submit_response(response=neighbor.id,
                         copy=true,
                         info_chosen=info_chosen,
+                        human=undefined,
                         topic_seen=topic_seen);
         disable_neighbor_buttons();
         $("#neighbor_div").hide();

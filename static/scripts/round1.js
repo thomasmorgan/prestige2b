@@ -55,8 +55,8 @@ display_topic_warning = function() {
 }
 
 process_good_luck = function() {
-    info_chosen = "Topic Score";
     topic_seen = "Experiment";
+    info_chosen = "Topic Score";
     check_neighbors(info_chosen);
 }
 
