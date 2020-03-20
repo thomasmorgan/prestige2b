@@ -293,7 +293,7 @@ update_neighbor_button = function(number, neighbor) {
     // update button and question display according to info_chosen
     if (info_chosen == "Topic Score" && round !==0) {
         $(button_id).html(neighbor_image + topic + " Score: " + "<font size='5'>" + scores[topic] + "</font>" + " correct");
-        topic_seen = "Experiment1";
+        topic_seen = topic;
     } else if (info_chosen =="Topic Score" && round ==0) {
         $(button_id).html(neighbor_image + topic + " Score: " + "<font size='5'> 0 </font>" + " correct");
         topic_seen = "Experiment";
