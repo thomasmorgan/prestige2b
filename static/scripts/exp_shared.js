@@ -296,13 +296,13 @@ update_neighbor_button = function(number, neighbor) {
         topic_seen = topic;
     } else if (info_chosen =="Topic Score" && round ==0) {
         $(button_id).html(neighbor_image + topic + " Score: " + "<font size='5'> 0 </font>" + " correct");
-        topic_seen = "Experiment";
+        topic_seen = topic;
     } else if (info_chosen == "Times Chosen on This Topic") {
         $(button_id).html(neighbor_image + "chosen " + "<font size='5'>" + copies[topic] + "</font>" + " times in the " + topic + " topic");
-        topic_seen = "Experiment";
+        topic_seen = topic;
     } else if (info_chosen == "Times Chosen Altogether") {
         $(button_id).html(neighbor_image + "chosen " + "<font size='5'>" + neighbor_properties.n_copies + "</font>" + " times altogether in Round 1");
-        topic_seen = "Experiment";
+        topic_seen = "all";
     } else if (info_chosen == "Times Chosen on a Different Topic") {
         if (number == 1) {
             var topics = ["Geography", "Art", "Language", "Weight"];
