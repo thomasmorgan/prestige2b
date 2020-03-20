@@ -1,6 +1,5 @@
 """Bartlett's transmission chain experiment from Remembering (1932)."""
 
-import logging
 import json
 
 from operator import attrgetter
@@ -8,10 +7,8 @@ from datetime import datetime
 
 from dallinger.experiment import Experiment
 from dallinger.nodes import Source
-from dallinger.models import Info, Node
+from dallinger.models import Info
 
-
-logger = logging.getLogger(__file__)
 
 class Bartlett1932(Experiment):
     """Define the structure of the experiment."""
@@ -35,7 +32,7 @@ class Bartlett1932(Experiment):
         self.known_classes["LottyNode"] = self.models.LottyNode
         self.known_classes["QuizSource"] = self.models.QuizSource
         self.experiment_repeats = 1
-        self.initial_recruitment_size = int(self.experiment_repeats*self.group_size)
+        self.initial_recruitment_size = int(self.experiment_repeats * self.group_size)
         if session:
             self.setup()
 
@@ -45,7 +42,6 @@ class Bartlett1932(Experiment):
             'group_size': self.group_size,
             'condition': "A"
         }
-
 
     def setup(self):
         """Setup the networks.
@@ -58,39 +54,37 @@ class Bartlett1932(Experiment):
         if not self.networks():
             super(Bartlett1932, self).setup()
             for net in self.networks():
-                self.models.QuizSource(network=net)            
-
+                self.models.QuizSource(network=net)
 
     def create_network(self):
         """Return a new network."""
-        return self.models.LottyStar(max_size=self.group_size+1)
-
+        return self.models.LottyStar(max_size=self.group_size + 1)
 
     def create_node(self, participant, network):
         """Create a node for a participant."""
         node = self.models.LottyNode(network=network, participant=participant)
         import random
         name = random.randint(100, 999)
-        #name is then assigned to node's property1 in the database
+
+        # name is then assigned to node's property1 in the database
         node.property1 = json.dumps({
             'name': name,
             'n_copies': 0,
-            'n_copies_geog':0,
-            'n_copies_weight':0,
-            'n_copies_lang':0,
-            'n_copies_art':0,
+            'n_copies_geog': 0,
+            'n_copies_weight': 0,
+            'n_copies_lang': 0,
+            'n_copies_art': 0,
             'asoc_score': 0,
-            'asoc_score_geog':0,
-            'asoc_score_weight':0,
-            'asoc_score_lang':0,
-            'asoc_score_art':0,
+            'asoc_score_geog': 0,
+            'asoc_score_weight': 0,
+            'asoc_score_lang': 0,
+            'asoc_score_art': 0,
             'score': 0,
             'bonus': False,
             'last_request': str(datetime.now())
         })
         node.property2 = self.public_properties["condition"]
         return node
-
 
     def get_network_for_participant(self, participant):
         if participant.nodes(failed="all"):
@@ -102,15 +96,12 @@ class Bartlett1932(Experiment):
         else:
             return None
 
-
     def add_node_to_network(self, node, network):
         """Add node to the chain and receive transmissions."""
         network.add_node(node)
         source = node.neighbors(type=Source, direction="from")[0]
         if network.full:
             source.transmit()
-
-
 
     def info_post_request(self, node, info):
         node.last_request = datetime.now()
@@ -139,7 +130,6 @@ class Bartlett1932(Experiment):
             if node == self.group_leader(group):
                 self.advance_group(group)
 
-
     def group_leader(self, network):
         # returns the node in the network that most recently created an info
         infos = network.infos(type=self.models.LottyInfo)
@@ -147,8 +137,6 @@ class Bartlett1932(Experiment):
             return max(infos, key=attrgetter("id")).origin
         else:
             return None
-
-
 
     def group_ready_to_advance(self, network):
         # the network is ready to advance only if:
@@ -176,12 +164,9 @@ class Bartlett1932(Experiment):
                 infos.append(max(g.infos(), key=attrgetter("id")))
 
         # apply the checks
-        return (
-            len(infos) == network.size() - 1 and
-            len(set([i.number for i in infos])) == 1 and
-            all([i.contents in [Rwer, Wwer, "Ask Someone Else", "Bad Luck"] for i in infos])
-        )
-
+        return (len(infos) == network.size() - 1
+                and len(set([i.number for i in infos])) == 1
+                and all([i.contents in [Rwer, Wwer, "Ask Someone Else", "Bad Luck"] for i in infos]))
 
     def advance_group(self, network):
         # get the current group answers
@@ -199,13 +184,12 @@ class Bartlett1932(Experiment):
             self.notify_bad_luck(network)
 
         # if no-one copied
-        elif not "Ask Someone Else" in answers:
+        elif "Ask Someone Else" not in answers:
             self.send_next_question(network)
-            
+
         # if some copied
         else:
             self.notify_good_luck(group, infos, answers)
-
 
     def copy_neighbor(self, node, info):
         # Find the neighbor
@@ -220,23 +204,23 @@ class Bartlett1932(Experiment):
             if info.topic == "Geography":
                 neighbor.n_copies_geog = neighbor.n_copies_geog + 1
             elif info.topic == "Weight":
-                 neighbor.n_copies_weight = neighbor.n_copies_weight + 1
+                neighbor.n_copies_weight = neighbor.n_copies_weight + 1
             elif info.topic == "Language":
-                 neighbor.n_copies_lang = neighbor.n_copies_lang + 1
+                neighbor.n_copies_lang = neighbor.n_copies_lang + 1
             elif info.topic == "Art":
-                 neighbor.n_copies_art = neighbor.n_copies_art + 1
+                neighbor.n_copies_art = neighbor.n_copies_art + 1
 
         # fail the original info
         info.fail()
-        
+
         # ask the neighbor to transmit their actual decision to the current player.
         copied_info = max(neighbor.infos(), key=attrgetter("id"))
         neighbor.transmit(what=copied_info, to_whom=node)
-        
+
         # the current player receives it and copies it.
         node.receive()
         node.replicate(info_in=copied_info)
-        
+
         # get the newly made info, and copy its properties over as well.
         new_info = max(node.infos(), key=attrgetter("id"))
         new_info.property1 = copied_info.property1
@@ -246,21 +230,18 @@ class Bartlett1932(Experiment):
 
         return new_info
 
-
     def update_node_bonus(self, node):
         # update the nodes bonus
-        node.bonus = node.score >85
+        node.bonus = node.score > 85
 
         # add node properties to ppt object
         ppt = node.participant
         ppt.property1 = node.score
         ppt.property2 = node.bonus
 
-
     def notify_bad_luck(self, network):
         source = network.nodes(type=Source)[0]
         source.transmit(what=Info(origin=source, contents="Bad Luck"))
-
 
     def send_next_question(self, network):
         # delete all old vectors
@@ -268,16 +249,15 @@ class Bartlett1932(Experiment):
         for v in network.vectors():
             if v.origin_id != source.id:
                 v.fail()
-        
-        #then get the source to transmit to all of its neighbors
-        source.transmit()
 
+        # then get the source to transmit to all of its neighbors
+        source.transmit()
 
     def notify_good_luck(self, nodes, group_infos, answers):
         copiers = [n for n, a in zip(nodes, answers) if a == "Ask Someone Else"]
         not_copiers = [n for n, a in zip(nodes, answers) if a != "Ask Someone Else"]
         for n in not_copiers:
-            #connect the not copiers to the copiers
+            # connect the not copiers to the copiers
             n.connect(whom=copiers)
 
         source = nodes[0].network.nodes(type=Source)[0]
@@ -287,7 +267,6 @@ class Bartlett1932(Experiment):
             if i.contents == "Ask Someone Else":
                 i.fail()
 
-    
     def bonus(self, participant):
         """Calculate a participants bonus."""
         nodes = participant.nodes()
@@ -296,14 +275,14 @@ class Bartlett1932(Experiment):
 
         node = nodes[0]
         bonus = node.bonus
-        if (bonus == True):
+        if (bonus is True):
             return 20
         else:
             return 0
 
     def transmission_get_request(self, node, transmissions):
         node.last_request = datetime.now()
-        
+
         # does anyone need kicking out?
         good_nodes = []
         bad_nodes = []
@@ -313,7 +292,7 @@ class Bartlett1932(Experiment):
             else:
                 good_nodes.append(n)
 
-        if bad_nodes and node.id == max(good_nodes, key=attrgetter("id")).id:        
+        if bad_nodes and node.id == max(good_nodes, key=attrgetter("id")).id:
             for n in bad_nodes:
                 n.fail()
             self.readvance_group(node.network)
