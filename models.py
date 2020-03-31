@@ -179,6 +179,21 @@ class LottyNode(Node):
             for t in self.transformations():
                 t.fail()
 
+    def increment_copies(self, topic):
+        print("Node {}. Copies: {}, Geog: {}, Art: {}, Weight: {}, Lang: {}.".format(self.id, self.n_copies, self.n_copies_geog, self.n_copies_art, self.n_copies_weight, self.n_copies_lang))
+        self.n_copies = self.n_copies + 1
+        if topic == "Geography":
+            self.n_copies_geog = self.n_copies_geog + 1
+        elif topic == "Art":
+            self.n_copies_art = self.n_copies_art + 1
+        elif topic == "Weight":
+            self.n_copies_weight = self.n_copies_weight + 1
+        elif topic == "Language":
+            self.n_copies_lang = self.n_copies_lang + 1
+        else:
+            raise ValueError("{} is not a valid topic".format(topic))
+        print("Node {}. Copies: {}, Geog: {}, Art: {}, Weight: {}, Lang: {}.".format(self.id, self.n_copies, self.n_copies_geog, self.n_copies_art, self.n_copies_weight, self.n_copies_lang))
+
 
 class LottyInfo(Info):
 

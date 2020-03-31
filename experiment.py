@@ -197,30 +197,8 @@ class Bartlett1932(Experiment):
 
         # increase their number of copies, but only if we're in round 1
         if info.round == 1:
-            self.log("incremementing n_copies of node {}, from {} to {}".format(neighbor.id, neighbor.n_copies, neighbor.n_copies + 1))
-            neighbor.n_copies = neighbor.n_copies + 1
-            self.save()
-            self.log("n_copies of node {} has been incremented, its now {}".format(neighbor.id, neighbor.n_copies))
-            if info.topic == "Geography":
-                self.log("incremementing n_copies_geog of node {}, from {} to {}".format(neighbor.id, neighbor.n_copies_geog, neighbor.n_copies_geog + 1))
-                neighbor.n_copies_geog = neighbor.n_copies_geog + 1
-                self.save()
-                self.log("n_copies_geog of node {} has been incremented, its now {}".format(neighbor.id, neighbor.n_copies_geog))
-            elif info.topic == "Weight":
-                self.log("incremementing n_copies_weight of node {}, from {} to {}".format(neighbor.id, neighbor.n_copies_weight, neighbor.n_copies_weight + 1))
-                neighbor.n_copies_weight = neighbor.n_copies_weight + 1
-                self.save()
-                self.log("n_copies_weight of node {} has been incremented, its now {}".format(neighbor.id, neighbor.n_copies_weight))
-            elif info.topic == "Language":
-                self.log("incremementing n_copies_lang of node {}, from {} to {}".format(neighbor.id, neighbor.n_copies_lang, neighbor.n_copies_lang + 1))
-                neighbor.n_copies_lang = neighbor.n_copies_lang + 1
-                self.save()
-                self.log("n_copies_lang of node {} has been incremented, its now {}".format(neighbor.id, neighbor.n_copies_lang))
-            elif info.topic == "Art":
-                self.log("incremementing n_copies_art of node {}, from {} to {}".format(neighbor.id, neighbor.n_copies_art, neighbor.n_copies_art + 1))
-                neighbor.n_copies_art = neighbor.n_copies_art + 1
-                self.save()
-                self.log("n_copies_art of node {} has been incremented, its now {}".format(neighbor.id, neighbor.n_copies_art))
+            neighbor.increment_copies(info.topic)
+            self.save(neighbor)
 
         # fail the original info
         info.fail()
