@@ -201,22 +201,22 @@ class Bartlett1932(Experiment):
             neighbor.n_copies = neighbor.n_copies + 1
             self.save()
             self.log("n_copies of node {} has been incremented, its now {}".format(neighbor.id, neighbor.n_copies))
-            if (info.number > 0) and (info.number < 16):
+            if info.topic == "Geography":
                 self.log("incremementing n_copies_geog of node {}, from {} to {}".format(neighbor.id, neighbor.n_copies_geog, neighbor.n_copies_geog + 1))
                 neighbor.n_copies_geog = neighbor.n_copies_geog + 1
                 self.save()
                 self.log("n_copies_geog of node {} has been incremented, its now {}".format(neighbor.id, neighbor.n_copies_geog))
-            elif (info.number > 15) and (info.number < 31):
+            elif info.topic == "Weight":
                 self.log("incremementing n_copies_weight of node {}, from {} to {}".format(neighbor.id, neighbor.n_copies_weight, neighbor.n_copies_weight + 1))
                 neighbor.n_copies_weight = neighbor.n_copies_weight + 1
                 self.save()
                 self.log("n_copies_weight of node {} has been incremented, its now {}".format(neighbor.id, neighbor.n_copies_weight))
-            elif (info.number > 30) and (info.number < 46):
+            elif info.topic == "Language":
                 self.log("incremementing n_copies_lang of node {}, from {} to {}".format(neighbor.id, neighbor.n_copies_lang, neighbor.n_copies_lang + 1))
                 neighbor.n_copies_lang = neighbor.n_copies_lang + 1
                 self.save()
                 self.log("n_copies_lang of node {} has been incremented, its now {}".format(neighbor.id, neighbor.n_copies_lang))
-            elif (info.number > 45) and (info.number < 61):
+            elif info.topic == "Art":
                 self.log("incremementing n_copies_art of node {}, from {} to {}".format(neighbor.id, neighbor.n_copies_art, neighbor.n_copies_art + 1))
                 neighbor.n_copies_art = neighbor.n_copies_art + 1
                 self.save()
