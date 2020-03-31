@@ -180,8 +180,10 @@ class LottyNode(Node):
                 t.fail()
 
     def increment_copies(self, topic):
+        import sys
         p1 = json.loads(self.property1)
         print("Node {}. Copies: {}, Geog: {}, Art: {}, Weight: {}, Lang: {}.".format(self.id, self.n_copies, self.n_copies_geog, self.n_copies_art, self.n_copies_weight, self.n_copies_lang))
+        sys.stdout.flush()
         p1["n_copies"] += 1
         if topic == "Geography":
             p1["n_copies_geog"] += 1
@@ -195,6 +197,7 @@ class LottyNode(Node):
             raise ValueError("{} is not a valid topic".format(topic))
         self.property1 = json.dumps(p1)
         print("Node {}. Copies: {}, Geog: {}, Art: {}, Weight: {}, Lang: {}.".format(self.id, self.n_copies, self.n_copies_geog, self.n_copies_art, self.n_copies_weight, self.n_copies_lang))
+        sys.stdout.flush()
 
 
 class LottyInfo(Info):
