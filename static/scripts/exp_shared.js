@@ -42,7 +42,8 @@ get_details_from_store = function() {
     my_node_id = store.get("node_id");
     my_network_id = store.get("network_id");
     condition = store.get("condition");
-    $("#welcome").html("Welcome to our quiz, you are player " + store.get("node_name"));
+    node_name = store.get("node_name");
+    $("#welcome").html("Welcome to our quiz, you are player " + node_name);
 };
 
 // get any pending incoming transmissions
