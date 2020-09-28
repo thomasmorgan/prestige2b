@@ -246,6 +246,8 @@ process_neighbors = function() {
             part2 = "below is how many times they were chosen in Round 1 altogether.";
         } else if (info_chosen =="Times Chosen on a Different Topic") {
             part2 = "below is how many times they were chosen in Round 1 on a different topic";
+        } else if (info_chosen =="Their Player ID") {
+            part2 = "below is their Player ID";
         }
     } else {
         part1 = ("You have " + neighbors.length + " players to copy from, ");
@@ -257,6 +259,8 @@ process_neighbors = function() {
             part2 = "below are how many times they were chosen in Round 1 altogether.";
         } else if (info_chosen == "Times Chosen on a Different Topic") {
             part2 = "below are how many times they were chosen in Round 1 on a different topic";
+        } else if (info_chosen == "Their Player ID") {
+            part2 = "below are their Player IDs";
         }
     }
 
@@ -305,6 +309,8 @@ update_neighbor_button = function(number, neighbor) {
     } else if (info_chosen == "Times Chosen Altogether") {
         $(button_id).html(neighbor_image + "chosen " + "<font size='5'>" + neighbor_properties.n_copies + "</font>" + " times altogether in Round 1");
         topic_seen = "all";
+    } else if (info_chosen == "Their Player ID") {
+        $(button_id).html(neighbor_image + "<font size='5'>" + node_name + "</font>");
     } else if (info_chosen == "Times Chosen on a Different Topic") {
         if (number == 1) {
             var topics = ["Geography", "Art", "Language", "Weight"];

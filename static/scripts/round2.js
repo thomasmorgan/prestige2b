@@ -72,7 +72,8 @@ display_round_warning = function() {
     var button_a_html = '<button id="check_A" type="button" class="btn btn-primary"> Times chosen on the topic you are answering, or, times chosen on a different topic </button>';
     var button_b_html = '<button id="check_B" type="button" class="btn btn-primary"> Times chosen on a different topic, or, times chosen altogether </button>';
     var button_c_html = '<button id="check_C" type="button" class="btn btn-primary"> Times chosen altogether, or, times chosen on the topic you are answering </button>';
-    var buttons = [button_a_html, button_b_html, button_c_html];
+    var button_d_html = '<button id="check_D" type="button" class="btn btn-primary"> Times chosen on a different topic, or, their Player ID </button>';
+    var buttons = [button_a_html, button_b_html, button_c_html, button_d_html];
     shuffle(buttons);
     button_html = buttons[0] + "<br>" + buttons[1] + "<br>" + buttons[2];
     $("#r2_check_button_div").html(button_html);
@@ -104,6 +105,15 @@ display_round_warning = function() {
         }
     });
 
+    $("#check_D").click(function() {
+        get_source();
+        if (condition == "D") {
+            update_ui_attention_check_passed();
+        } else {
+            update_ui_attention_check_failed();
+        }
+    });
+
 
     if (condition == "A") {
         check_info = '<br><br> 1) the number of times they were chosen in Round 1 on the topic you are answering, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 on a different topic.';
@@ -111,7 +121,8 @@ display_round_warning = function() {
         check_info = '<br><br> 1) the number of times they were chosen in Round 1 on a different topic to the one you are answering, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 altogether across all topics.';
     } else if (condition =="C") {
         check_info = '<br><br> 1) the number of times they were chosen in Round 1 altogether across all topics, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 on the topic you are answering.';
-    }
+    } else if (condition =="D") {
+        check_info = '<br><br> 1) the number of times they were chosen in Round 1 on a different topic to the one you are answering, <br><br> or <br><br> 2) their Player ID.';
 
     $("#warning_info").html('Thank you for completing Round 1. <br> <br> You are now starting <font color="red"> Round 2 </font> which consists of the final 40 questions.<br><br>You will now be given <font color = "red"> two </font> choices each time you choose to <font color = "red"> "Ask Someone Else" </font> <br><br>You will be able to choose between seeing either: ' + check_info);
     $("#warning_div").show();
@@ -155,12 +166,14 @@ disable_R2_buttons = function() {
     $("#check_A").addClass('disabled');
     $("#check_B").addClass('disabled');
     $("#check_C").addClass('disabled');
+    $("#check_D").addClass('disabled');
 }
 
 enable_R2_buttons = function() {
     $("#check_A").removeClass('disabled');
     $("#check_B").removeClass('disabled');
     $("#check_C").removeClass('disabled');
+    $("#check_D").addClass('disabled');
 }
 
 assign_choice_buttons = function() {
@@ -173,6 +186,9 @@ assign_choice_buttons = function() {
     } else if (condition =="C") {
         info_choice_a = "Times Chosen Altogether"
         info_choice_b = "Times Chosen on This Topic"
+    } else if (condition =="D") {
+        info_choice_a = "Times Chosen on a Different Topic"
+        info_choice_b = "Their Player ID"
     }
     if (Math.random() < 0.5) {
         $("#info-choice-a").html(info_choice_a);
@@ -199,6 +215,8 @@ process_neighbors = function() {
             part2 = "below is how many times they were chosen in Round 1 altogether.";
         } else if (info_chosen == "Times Chosen on This Topic") {
             part2 = "below is how many times they were chosen in Round 1 on this Topic.";
+        } else if (info_chosen == "Their Player ID") {
+            part2 = "below is their Player ID";
         }
     } else {
         part1 = ("You have " + neighbors.length + " players to copy from, ");
@@ -208,6 +226,8 @@ process_neighbors = function() {
             part2 = "below are how many times they were chosen in Round 1 altogether.";
         } else if (info_chosen == "Times Chosen on This Topic") {
             part2 = "below are how many times they were chosen in Round 1 on this Topic.";
+        } else if (info_chosen == "Their Player ID") {
+            part2 = "below are their Player IDs";
         }
     }
     $("#wait_div").hide()
