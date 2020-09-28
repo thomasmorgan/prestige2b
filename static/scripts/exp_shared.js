@@ -4,6 +4,7 @@ var topic_seen;
 $(document).ready(function() {
 
     // initially hide all divs except the welcome div
+    $("#welcome_div").show();
     $("#wait_div").show();
 
     // Add functionality to buttons controlling participants answers
@@ -150,7 +151,7 @@ parse_question = function(question) {
 // display the question
 display_question = function() {
     console.log("*** Displaying question");
-    
+    $("#welcome_div").show();
     $("#question").html(question_text);
     update_question_number_text();
     
@@ -172,8 +173,8 @@ display_question = function() {
     $("#countdown").html(countdown);
 
     $("#wait_div").hide();
-    $("#welcome_div").hide();
     $("#question_div").show();
+    $("#welcome_div").show();
     start_answer_timeout();
 };
 
@@ -337,6 +338,7 @@ disable_neighbor_buttons = function() {
         $(button_string).off("click");
     }
     $("#question").html("Waiting for other players to catch up.");
+    $("#welcome_div").show();
 };
 
 hide_pics = function() {
