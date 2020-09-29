@@ -310,7 +310,7 @@ update_neighbor_button = function(number, neighbor) {
         $(button_id).html(neighbor_image + "chosen " + "<font size='5'>" + neighbor_properties.n_copies + "</font>" + " times altogether in Round 1");
         topic_seen = "all";
     } else if (info_chosen == "Their Player ID") {
-        $(button_id).html(neighbor_image + "<font size='5'>" + node_name + "</font>");
+        $(button_id).html(neighbor_image + "Player ID:" + "<font size='5'>" + neighbor_properties.node_name + "</font>");
     } else if (info_chosen == "Times Chosen on a Different Topic") {
         if (number == 1) {
             var topics = ["Geography", "Art", "Language", "Weight"];

@@ -75,7 +75,7 @@ display_round_warning = function() {
     var button_d_html = '<button id="check_D" type="button" class="btn btn-primary"> Times chosen on a different topic, or, their Player ID </button>';
     var buttons = [button_a_html, button_b_html, button_c_html, button_d_html];
     shuffle(buttons);
-    button_html = buttons[0] + "<br>" + buttons[1] + "<br>" + buttons[2];
+    button_html = buttons[0] + "<br>" + buttons[1] + "<br>" + buttons[2] + "<br>" + buttons[3];
     $("#r2_check_button_div").html(button_html);
 
     $("#check_A").click(function() {
@@ -123,6 +123,7 @@ display_round_warning = function() {
         check_info = '<br><br> 1) the number of times they were chosen in Round 1 altogether across all topics, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 on the topic you are answering.';
     } else if (condition =="D") {
         check_info = '<br><br> 1) the number of times they were chosen in Round 1 on a different topic to the one you are answering, <br><br> or <br><br> 2) their Player ID.';
+    }
 
     $("#warning_info").html('Thank you for completing Round 1. <br> <br> You are now starting <font color="red"> Round 2 </font> which consists of the final 40 questions.<br><br>You will now be given <font color = "red"> two </font> choices each time you choose to <font color = "red"> "Ask Someone Else" </font> <br><br>You will be able to choose between seeing either: ' + check_info);
     $("#warning_div").show();
@@ -173,7 +174,7 @@ enable_R2_buttons = function() {
     $("#check_A").removeClass('disabled');
     $("#check_B").removeClass('disabled');
     $("#check_C").removeClass('disabled');
-    $("#check_D").addClass('disabled');
+    $("#check_D").removeClass('disabled');
 }
 
 assign_choice_buttons = function() {
